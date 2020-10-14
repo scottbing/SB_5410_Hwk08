@@ -25,10 +25,10 @@ class Individual(object):
         '''
         create random genes for mutation
         '''
-        r = random.choice(tange(0,255))
-        g = random.choice(tange(0, 255))
-        b = random.choice(tange(0, 255))
-        return (r,g,b)
+        r = random.choice(range(0, 255))
+        g = random.choice(range(0, 255))
+        b = random.choice(range(0, 255))
+        return (r, g, b)
 
     @classmethod
     def create_gnome(self):
@@ -73,15 +73,15 @@ class Individual(object):
         '''
             Perform mating and produce new offspring
         '''
-        #change 10 things at random
+        # change 10 things at random
         child_chromosome = self.chromosome.copy()
         for i in range(10):
-            idx = random.randint(0,99)
-            idy = random.randint(0,99)
+            idx = random.randint(0, 99)
+            idy = random.randint(0, 99)
             r = random.choice(tange(0, 255))
             g = random.choice(tange(0, 255))
             b = random.choice(tange(0, 255))
-            child_chromosome[idx][idy] = (r,g,b)
+            child_chromosome[idx][idy] = (r, g, b)
 
         return Individual(child_chromosome)
 
@@ -92,6 +92,10 @@ class Individual(object):
         string.
         '''
         fitness = 0
-        for gs, gt in zip(self.chromosome, self.target):
-            if gs != gt: fitness += 1
+        for rows, rowt in zip(self.chromosome, self.target):
+            for gs,gt in zip(rows, rowt):
+                if int(gs[0]) != gt[0] and\
+                        int(gs[1]) != gt[1] and\
+                        int(gs[2]) != gt[2]:
+                    fitness += 1
         return fitness
