@@ -1,4 +1,5 @@
 import random
+import numpy
 
 
 class Individual(object):
@@ -35,8 +36,8 @@ class Individual(object):
         '''
         create chromosome or string of genes
         '''
-        gnome_len = len(self.target)
-        return [self.mutated_genes() for _ in range(gnome_len)]
+        pix = numpy.random.rand(100,100,3) * 255
+        return pix
 
     # def mate(self, par2):
     #     '''
@@ -78,9 +79,9 @@ class Individual(object):
         for i in range(10):
             idx = random.randint(0, 99)
             idy = random.randint(0, 99)
-            r = random.choice(tange(0, 255))
-            g = random.choice(tange(0, 255))
-            b = random.choice(tange(0, 255))
+            r = random.choice(range(0, 255))
+            g = random.choice(range(0, 255))
+            b = random.choice(range(0, 255))
             child_chromosome[idx][idy] = (r, g, b)
 
         return Individual(child_chromosome)

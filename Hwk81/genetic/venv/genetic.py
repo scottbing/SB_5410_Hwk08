@@ -38,7 +38,7 @@ def main():
         Individual.set_target(TARGET)
         gnome = Individual.create_gnome()
         population.append(Individual(gnome))
-        print("".join(population[i].chromosome))
+        #print("".join(population[i].chromosome))
 
     while not found:
 
