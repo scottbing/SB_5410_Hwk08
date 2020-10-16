@@ -7,12 +7,14 @@ from PIL import Image
 
 from Individual import *
 
+# seed image name
+IMG_NAME = 'jake'
+
 # Number of individuals in each generation
 POPULATION_SIZE = 200
 
 # Generations limit
-#G_LIMIT = 100
-G_LIMIT = 10
+G_LIMIT = 100
 
 # Valid genes
 GENES = range(0, 255)
@@ -25,7 +27,14 @@ TARGET = None
 def main():
     global POPULATION_SIZE
 
-    img = Image.open('jake.jpg')
+    # get the number of generations
+    try:
+        gens = int(input("How many generations do you want? "))
+        G_LIMIT = gens
+    except Exception as e:
+        print("Error:", e)
+
+    img = Image.open(IMG_NAME + '.jpg')
     TARGET = numpy.array(img.getdata()).reshape(img.size[0], img.size[1], 3)
 
     # current generation
@@ -94,6 +103,9 @@ def main():
 
     im = Image.fromarray(population[0].chromosome.astype('uint8')).convert('RGB')
     im.show()
+
+    # save my image data from memory to a file with a different name
+    im.save('generated_' + IMG_NAME + '.jpg', 'JPEG')
 
 
 if __name__ == '__main__':

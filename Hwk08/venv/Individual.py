@@ -70,21 +70,21 @@ class Individual(object):
     #     # generated chromosome for offspring
     #     return Individual(child_chromosome)
 
-    def mate(self, par2):
-        '''
-            Perform mating and produce new offspring
-        '''
-        # change 10 things at random
-        child_chromosome = self.chromosome.copy()
-        for i in range(10):
-            idx = random.randint(0, 99)
-            idy = random.randint(0, 99)
-            r = random.choice(range(0, 255))
-            g = random.choice(range(0, 255))
-            b = random.choice(range(0, 255))
-            child_chromosome[idx][idy] = (r, g, b)
-
-        return Individual(child_chromosome)
+    # def mate(self, par2):
+    #     '''
+    #         Perform mating and produce new offspring
+    #     '''
+    #     # change 10 things at random
+    #     child_chromosome = self.chromosome.copy()
+    #     for i in range(10):
+    #         idx = random.randint(0, 99)
+    #         idy = random.randint(0, 99)
+    #         r = random.choice(range(0, 255))
+    #         g = random.choice(range(0, 255))
+    #         b = random.choice(range(0, 255))
+    #         child_chromosome[idx][idy] = (r, g, b)
+    #
+    #     return Individual(child_chromosome)
 
     def halfmate(self, par2):
         '''
@@ -92,16 +92,14 @@ class Individual(object):
         '''
         # chromosome for offspring
         length = len(self.chromosome)
-        print("length: ", length)
-        print("length / 2: ", length / 2)
 
-        first_half = self.chromosome[0:int(length / 2)]
-        print("first half shape: ", first_half.shape)
-        second_half = par2.chromosome[int(length / 2):]
-        print("Second half shape: ", second_half.shape)
+        # toggle placement of offspring
+        k = random.randint(0, 1)
+        if k == 1:
+            child_chromosome = numpy.concatenate((self.chromosome[0:int(length / 2)], par2.chromosome[int(length / 2):]))
+        else:
+            child_chromosome = numpy.concatenate((par2.chromosome[int(length / 2):], self.chromosome[0:int(length / 2)]))
 
-        child_chromosome = self.chromosome[0:int(length / 2)] + par2.chromosome[int(length / 2):]
-        print("length of child chromosome: ", len(child_chromosome))
         prob = random.random()
         if prob < 0.4:
             idx = random.randint(0, (length / 2) - 1)
